@@ -11,7 +11,7 @@ void main() {
   const path = 'https://example.com';
 
   setUpAll(() {
-    dio = Dio();
+    dio = Dio(BaseOptions(contentType: Headers.jsonContentType));
     dioAdapter = DioAdapter(dio: dio);
   });
 
@@ -65,11 +65,7 @@ void main() {
       expect(
         () async => await dio.get('/undefined'),
         throwsA(
-          predicate(
-            (DioError dioError) => dioError.message.startsWith(
-              'Assertion failed',
-            ),
-          ),
+          (DioError dioError) => dioError.error is AssertionError,
         ),
       );
     });
