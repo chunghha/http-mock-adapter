@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
-import 'package:http_mock_adapter/src/exceptions.dart';
 import 'package:http_mock_adapter/src/handlers/request_handler.dart';
 import 'package:http_mock_adapter/src/mixins/mixins.dart';
 import 'package:http_mock_adapter/src/request.dart';
@@ -27,12 +26,12 @@ mixin RequestHandling on Recording {
             'multipart/form-data; boundary=${data.boundary}';
         options.headers[Headers.contentLengthHeader] = data.length.toString();
       } else {
-        final _data = await dio.transformer.transformRequest(options);
+        final tData = await dio.transformer.transformRequest(options);
         List<int> bytes;
         if (options.requestEncoder != null) {
-          bytes = options.requestEncoder!(_data, options);
+          bytes = options.requestEncoder!(tData, options);
         } else {
-          bytes = utf8.encode(_data);
+          bytes = utf8.encode(tData);
         }
         options.headers[Headers.contentLengthHeader] = bytes.length.toString();
       }

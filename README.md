@@ -16,7 +16,7 @@
 Here is a very basic usage scenario:
 
 ```dart
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 void main() async {

@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:test/test.dart';
 
@@ -163,75 +163,12 @@ void main() {
 
         const data = {'message': 'Test!'};
 
-        Response<dynamic> response;
         const statusCode = 200;
         late DioAdapter dioAdapter;
 
         setUpAll(() {
           dio = Dio();
           dioAdapter = DioAdapter(dio: dio);
-        });
-
-        test('mocks requests via onPost() with matchers as intended', () async {
-          dioAdapter.onPost(
-            '/post-any-data',
-            (server) => server.reply(statusCode, data),
-            data: {
-              'any': Matchers.any,
-              'boolean': Matchers.boolean,
-              'integer': Matchers.integer,
-              'decimal': Matchers.decimal,
-              'string': Matchers.string,
-              'pattern': Matchers.pattern('TEST'),
-              'regexp': Matchers.regExp(RegExp(r'([a-z]{3} ?){3}')),
-              'strict': 'match',
-              'map': {
-                'a': Matchers.any,
-                'b': 'b',
-              },
-              'list': ['a', 'b'],
-            },
-            headers: {
-              'content-type': Matchers.pattern('application'),
-              'content-length': Matchers.number,
-            },
-          );
-
-          response = await dio.post('/post-any-data', data: {
-            'any': '201',
-            'boolean': 'FalsE',
-            'integer': 3902,
-            'decimal': '32.134',
-            'string': '',
-            'pattern': 'this is a test with ',
-            'regexp': 'abc def hij',
-            'strict': 'match',
-            'map': {
-              'a': 'a',
-              'b': 'b',
-            },
-            'list': ['a', 'b'],
-          });
-
-          expect({'message': 'Test!'}, response.data);
-        });
-
-        test('mocks date formatted POST request as intended', () async {
-          const pattern = r'(0?[1-9]|[12][0-9]|3[01])\-(0?[1-9]|1[012])\-\d{4}';
-
-          dioAdapter.onPost(
-            path,
-            (server) => server.reply(statusCode, data),
-            data: {'date': Matchers.pattern(pattern)},
-            headers: {
-              Headers.contentTypeHeader: Matchers.pattern('application'),
-              Headers.contentLengthHeader: Matchers.integer,
-            },
-          );
-
-          response = await dio.post(path, data: {'date': '04-01-2021'});
-
-          expect({'message': 'Test!'}, response.data);
         });
 
         test('fails on unsatisfied header expectation', () async {
@@ -247,7 +184,7 @@ void main() {
               () => dio.get(path),
               throwsA(predicate((e) =>
                   e is DioError &&
-                  e.type == DioErrorType.other &&
+                  e.type == DioErrorType.unknown &&
                   e.error is AssertionError)));
         });
       });

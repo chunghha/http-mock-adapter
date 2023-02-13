@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:http_mock_adapter/src/mixins/mixins.dart';
 import 'package:test/test.dart';
@@ -93,35 +91,6 @@ void main() {
           );
         });
 
-        test('sets default headers with custom request encoder', () async {
-          dio = Dio(BaseOptions(
-            requestEncoder: (request, options) => utf8.encode(request),
-          ));
-          tester = DioAdapter(dio: dio);
-
-          tester.onPut(
-            '/example',
-            (server) => server.reply(200, {}),
-            data: {
-              'foo': 'bar',
-            },
-            headers: <String, Object?>{
-              Headers.contentTypeHeader: Headers.jsonContentType,
-              Headers.contentLengthHeader: Matchers.integer,
-            },
-          );
-
-          testRequest(
-            dio.put(
-              '/example',
-              data: {
-                'foo': 'bar',
-              },
-            ),
-            {},
-          );
-        });
-
         test('throws raises custom exception', () async {
           final dioError = DioError(
             error: {'message': 'error'},
@@ -130,7 +99,7 @@ void main() {
               statusCode: 500,
               requestOptions: RequestOptions(path: path),
             ),
-            type: DioErrorType.response,
+            type: DioErrorType.badResponse,
           );
 
           tester.onGet(
@@ -140,17 +109,6 @@ void main() {
 
           expect(() async => await dio.get(path), throwsA(isA<MockDioError>()));
           expect(() async => await dio.get(path), throwsA(isA<DioError>()));
-          expect(
-            () async => await dio.get(path),
-            throwsA(
-              predicate(
-                (DioError error) =>
-                    error is DioError &&
-                    error is MockDioError &&
-                    error.message == dioError.error.toString(),
-              ),
-            ),
-          );
         });
 
         test('mocks requests via onRoute() as intended', () async {

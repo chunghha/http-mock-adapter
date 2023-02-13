@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/src/matchers/matcher.dart';
 import 'package:http_parser/http_parser.dart';
 

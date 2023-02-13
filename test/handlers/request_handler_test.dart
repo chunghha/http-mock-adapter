@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:http_mock_adapter/src/handlers/request_handler.dart';
 import 'package:http_mock_adapter/src/response.dart';
@@ -30,7 +30,7 @@ void main() {
       final mockResponseBody =
           statusHandler(RequestOptions(path: '')) as MockResponseBody;
 
-      final resolvedData = await DefaultTransformer().transformResponse(
+      final resolvedData = await BackgroundTransformer().transformResponse(
         RequestOptions(path: ''),
         mockResponseBody,
       );
@@ -61,7 +61,7 @@ void main() {
       final mockResponseBody =
           statusHandler(RequestOptions(path: '')) as MockResponseBody;
 
-      final resolvedData = await DefaultTransformer()
+      final resolvedData = await BackgroundTransformer()
           .transformResponse(RequestOptions(path: ''), mockResponseBody);
 
       expect(resolvedData, data);
@@ -91,7 +91,7 @@ void main() {
       final mockResponseBody =
           statusHandler(RequestOptions(path: '')) as MockResponseBody;
 
-      final resolvedData = await DefaultTransformer().transformResponse(
+      final resolvedData = await BackgroundTransformer().transformResponse(
         RequestOptions(path: ''),
         mockResponseBody,
       );
@@ -106,7 +106,7 @@ void main() {
         requestOptions: RequestOptions(
           path: 'path',
         ),
-        type: DioErrorType.response,
+        type: DioErrorType.badResponse,
       );
 
       requestHandler.throws(

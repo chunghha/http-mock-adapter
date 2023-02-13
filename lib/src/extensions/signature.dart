@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/src/request.dart';
 import 'package:http_mock_adapter/src/utils.dart';
 

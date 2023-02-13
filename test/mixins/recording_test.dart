@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:test/test.dart';
 
@@ -65,11 +65,7 @@ void main() {
       expect(
         () async => await dio.get('/undefined'),
         throwsA(
-          predicate(
-            (DioError dioError) => dioError.message.startsWith(
-              'Assertion failed',
-            ),
-          ),
+          predicate((DioError dioError) => dioError.error is AssertionError),
         ),
       );
     });

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 
 /// Top level interface for [Dio]'s [ResponseBody] and also [Dio]'s [DioError].
 /// This interface makes sure that we can save [DioError] and [ResponseBody]

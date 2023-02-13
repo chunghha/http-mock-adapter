@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/src/exceptions.dart';
 import 'package:http_mock_adapter/src/matchers/http_matcher.dart';
 import 'package:http_mock_adapter/src/mixins/mixins.dart';
 import 'package:http_mock_adapter/src/response.dart';
 
 /// [HttpClientAdapter] extension with data mocking and recording functionality.
-class DioAdapter extends HttpClientAdapter with Recording, RequestHandling {
+class DioAdapter with Recording, RequestHandling implements HttpClientAdapter {
   /// State of [DioAdapter] that can be closed to prohibit functionality.
   bool _isClosed = false;
 

@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:diox/diox.dart';
 import 'package:http_mock_adapter/src/adapters/dio_adapter.dart';
 import 'package:http_mock_adapter/src/interceptors/dio_interceptor.dart';
 import 'package:http_mock_adapter/src/response.dart';
@@ -11,7 +11,7 @@ class MockDioError extends DioError implements MockResponse {
   MockDioError({
     required RequestOptions requestOptions,
     Response? response,
-    DioErrorType type = DioErrorType.other,
+    DioErrorType type = DioErrorType.unknown,
     dynamic error,
     this.delay,
   }) : super(
